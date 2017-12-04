@@ -52,7 +52,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class MemoActivity extends AppCompatActivity implements View.OnClickListener, ColorPickerDialog.OnColorChangedListener{
+public class MemoActivity extends AppCompatActivity implements View.OnClickListener{
     LinearLayout memo;
     EditText memo_editText;
     TextView memo_textView;
@@ -71,16 +71,16 @@ public class MemoActivity extends AppCompatActivity implements View.OnClickListe
     int updateId;
     long first_backBtn;
     long second_backBtn;
-    int sort;
+    int sort = 0;
     public static Context mContext;
     @SuppressLint("SimpleDateFormat")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (mContext == null) {
-            mContext = this;
-        }
         setContentView(R.layout.activity_main);
+        //Singleton s = Singleton.getInstance(this);
+        //mContext = s.getmContext();
+        mContext = this;
         dbHelper = new DBHelper(this);
         dbHelper.open();
         list = (ListView) findViewById(R.id.listView);
@@ -104,7 +104,12 @@ public class MemoActivity extends AppCompatActivity implements View.OnClickListe
         //DB 값 ListView에 뿌려주기
         listItem = new ArrayList<MemoItem>();
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
-        sort = Integer.parseInt(pref.getString("set_memo_sort",""));
+        String sort_SetValue = pref.getString("set_memo_sort","");
+        if (sort_SetValue.equals("0") && sort_SetValue.equals("1")) {
+            sort = Integer.parseInt(sort_SetValue);
+        }else{
+            sort = 0;
+        }
         listItem = dbHelper.selectData(sort);
         for(int i=0;i<listItem.size();i++) {
             memoAdapter.addItem(listItem.get(i));
@@ -135,6 +140,7 @@ public class MemoActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.remove_cancel:
                 iconChanger(true);
                 clickEditBtn(count, false);
+                memoAdapter.clearChoices();
                 return true;
             case R.id.remove_list:
                 Long[] checkedItems = memoAdapter.getCheckItems();
@@ -172,7 +178,7 @@ public class MemoActivity extends AppCompatActivity implements View.OnClickListe
         memoAdapter.toggleCheckbox(bClick);
     }
 
-    @Override
+    /*@Override
         public void colorChanged(int color1) {
         PreferenceManager.getDefaultSharedPreferences(this).edit().putInt("color", color1).commit();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -185,7 +191,7 @@ public class MemoActivity extends AppCompatActivity implements View.OnClickListe
             getWindow().setStatusBarColor(getResources().getColor(R.color.colorAccent));
             getSupportActionBar().setBackgroundDrawable(getDrawable(R.color.fabPrimary));
         }
-    }
+    }*/
 
     private class ListViewItemClickListener implements AdapterView.OnItemClickListener{
         @Override

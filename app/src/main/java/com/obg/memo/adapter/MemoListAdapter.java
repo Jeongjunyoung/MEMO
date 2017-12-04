@@ -48,8 +48,17 @@ public class MemoListAdapter extends BaseAdapter {
         memoItem.setResId(item.getResId());
         items.add(memoItem);
     }
-    public void removeItem(int position) {
-        items.remove(position);
+    public void removeItem(Long[] arrLong) {
+        //items.remove(position);
+        for(int j=0;j<arrLong.length;j++) {
+            Long position = arrLong[j];
+            for(int i=0;i<items.size();i++) {
+                if (items.get(i).get_id() == position) {
+                    items.remove(i);
+                }
+            }
+        }
+
     }
     @Override
     public Object getItem(int i) {
@@ -65,24 +74,23 @@ public class MemoListAdapter extends BaseAdapter {
         MemoViewHolder holder;
         MemoItem memoItem = items.get(position);
         //CheckableLayout checkableLayout = (CheckableLayout) convertView.findViewById(R.id.memo_item_layout);
-        if (convertViewList.size() < items.size()) {
-            LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.memo_item, viewGroup, false);
-
-            holder = new MemoViewHolder();
-            holder.memoContent = (TextView) convertView.findViewById(R.id.memo_text);
-            holder.memoDate = (TextView) convertView.findViewById(R.id.memo_date);
-            holder.imageView = (ImageView) convertView.findViewById(R.id.memo_importance);
-            holder.checkBox = (CheckBox) convertView.findViewById(R.id.checkBox);
-            holder.checkBox.setId(memoItem.get_id());
-            holder.list_position = position;
-            convertViewList.add(convertView);
-            convertView.setTag(holder);
-        } else {
+        //if (convertViewList.size() <= items.size()) {
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        convertView = inflater.inflate(R.layout.memo_item, viewGroup, false);
+        holder = new MemoViewHolder();
+        holder.memoContent = (TextView) convertView.findViewById(R.id.memo_text);
+        holder.memoDate = (TextView) convertView.findViewById(R.id.memo_date);
+        holder.imageView = (ImageView) convertView.findViewById(R.id.memo_importance);
+        holder.checkBox = (CheckBox) convertView.findViewById(R.id.checkBox);
+        holder.checkBox.setId(memoItem.get_id());
+        holder.list_position = position;
+        convertViewList.add(convertView);
+        convertView.setTag(holder);
+        //Log.d("GETView", holder.memoContent.getText() + " :  " + memoItem.get_id());
+        /*} else {
             convertView = convertViewList.get(position);
             holder = (MemoViewHolder) convertView.getTag();
-        }
-        //CheckBox checkBox = (CheckBox) convertView.findViewById(R.id.checkBox);
+        }*/
         if (cClick) {
             holder.checkBox.setVisibility(View.VISIBLE);
         } else if (!cClick) {
@@ -102,16 +110,23 @@ public class MemoListAdapter extends BaseAdapter {
     public Long[] getCheckItems() {
         List<Long> checkIds = new ArrayList<Long>();
         //int index = 0;
+        int[] indexArr;
         View view;
         for(int i=0;i<convertViewList.size();i++) {
             view = convertViewList.get(i);
             MemoViewHolder holder = (MemoViewHolder) view.getTag();
             if (holder.checkBox.isChecked()) {
                 checkIds.add((long) holder.checkBox.getId());
-                removeItem(i);
+                //removeItem(holder.checkBox.getId());
+                //indexArr[i] = holder.checkBox.getId();
+                //Log.d("IN", holder.memoContent.getText() +" :  " + holder.checkBox.getId());
             }
         }
+        for(int j=0;j<items.size();j++) {
+            //Log.d("OUT", "" + items.get(j).get_id());
+        }
         Long[] arrLong = (Long[]) checkIds.toArray(new Long[0]);
+        removeItem(arrLong);
         return arrLong;
     }
 
@@ -155,14 +170,6 @@ public class MemoListAdapter extends BaseAdapter {
         memoItem.setContent(modifyStr);
         return position;
     }
-
-    /*public void setSort(int sort) {
-        dbHelper = new DBHelper();
-        items.clear();
-        convertViewList.clear();
-        items = dbHelper.selectData(sort);
-        notifyDataSetChanged();
-    }*/
     public void memoAdapterItemClear() {
         items.clear();
     }

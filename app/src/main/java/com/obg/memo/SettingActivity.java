@@ -1,5 +1,6 @@
 package com.obg.memo;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -69,7 +70,9 @@ public class SettingActivity extends PreferenceActivity implements Preference.On
         if (preference == sortPre) {
             int index = sortPre.findIndexOfValue(value);
             sortPre.setSummary(sortPre.getEntries()[index]);
-            ((MemoActivity) MemoActivity.mContext).setSort(index);
+            Singleton singleton = Singleton.getInstance(MemoActivity.mContext);
+            Context context = singleton.getmContext();
+            ((MemoActivity) context).setSort(index);
         }
         return true;
     }
