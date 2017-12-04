@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fab="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+   <FrameLayout
+       android:layout_width="match_parent"
+       android:layout_height="match_parent"
+       android:orientation="vertical">
+       <Spinner
+           android:id="@+id/spinner"
+           android:layout_width="match_parent"
+           android:layout_height="41dp"
+           android:layout_gravity="top"
+           android:textAlignment="center" />
+
+
+       <com.melnykov.fab.FloatingActionButton
+           android:id="@+id/micBtn"
+           android:layout_width="261dp"
+           android:layout_height="20dp"
+           android:layout_gravity="bottom|right"
+           android:layout_marginBottom="20dp"
+           android:layout_marginRight="16dp"
+           android:src="@drawable/floating_mic_icon"
+           fab:fab_colorNormal="@color/fabPrimary"
+           fab:fab_colorPressed="@color/fabPressed"
+           fab:fab_colorRipple="@color/fabRipple" />
+
+       <EditText
+           android:id="@+id/write_editText"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+           android:background="#dfd7bf"
+           android:textSize="20dp"
+           android:layout_marginTop="41dp"
+           android:gravity="top"/>
+   </FrameLayout>
+</RelativeLayout>

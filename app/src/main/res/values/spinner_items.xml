@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="importance">
+        <item>매우 중요</item>
+        <item>중요</item>
+        <item>보통</item>
+    </string-array>
+</resources>

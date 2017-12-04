@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="sortArray">
+        <item>날짜순</item>
+        <item>중요도순</item>
+    </string-array>
+    <string-array name="sortArray_values">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
+</resources>

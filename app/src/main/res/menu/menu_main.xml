@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/delete_list"
+        android:icon="@drawable/delete_icon"
+        android:title="deleteSel"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/setting"
+        android:icon="@drawable/floating_add_icon"
+        android:title="changeTheme"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/remove_list"
+        android:icon="@drawable/remove_icon2"
+        android:title="remove"
+        app:showAsAction="always"
+        android:visible="false"/>
+    <item
+        android:id="@+id/remove_cancel"
+        android:icon="@drawable/delete_cancel_icon"
+        android:title="removeCancel"
+        app:showAsAction="always"
+        android:visible="false"/>
+</menu>

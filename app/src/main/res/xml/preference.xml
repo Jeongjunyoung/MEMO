@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <Preference
+        android:defaultValue="0"
+        android:title="테마색 변경"
+        android:key="key_setTheme"
+        android:icon="@drawable/floating_add_icon"/>
+    <ListPreference
+        android:defaultValue="0"
+        android:title="MEMO 정렬"
+        android:entries="@array/sortArray"
+        android:entryValues="@array/sortArray_values"
+        android:key="set_memo_sort"
+        android:negativeButtonText="@null"
+        android:positiveButtonText="@null"
+        android:icon="@drawable/floating_add_icon"/>
+    <PreferenceCategory
+        android:layout="@layout/preference_cate">
+        <ListPreference
+            android:defaultValue="0"
+            android:title="Developer"
+            android:icon="@drawable/floating_add_icon"/>
+        <ListPreference
+            android:defaultValue="0"
+            android:title="Version"
+            android:icon="@drawable/floating_add_icon"/>
+    </PreferenceCategory>
+</PreferenceScreen>
