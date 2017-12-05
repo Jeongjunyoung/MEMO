@@ -31,8 +31,19 @@ public class DBHelper{
         @Override
         public void onCreate(SQLiteDatabase sqLiteDatabase) {
             sqLiteDatabase.execSQL("create table oneline_memo(_id integer primary key AUTOINCREMENT, content text, date text, res_id integer)");
-
+            sqLiteDatabase.execSQL("create table theme_color(window text, actionbar text, background text, textsize text)");
+            String sql = "insert into theme_color(window, actionbar, background, textsize) values(?,?,?,?)";
+            Object[] params = {"#9ca0a6", "#6d7073", "#d9dcdf", "25dp"};
+            sqLiteDatabase.execSQL(sql, params);
         }
+
+        /*@Override
+        public void onOpen(SQLiteDatabase db) {
+            String sql = "insert into theme_color(window, actionbar, background, textsize) values(?,?,?,?)";
+            Object[] params = {"#9ca0a6", "#6d7073", "#d9dcdf", "25dp"};
+            db.execSQL(sql, params);
+            super.onOpen(db);
+        }*/
 
         @Override
         public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
@@ -97,5 +108,28 @@ public class DBHelper{
         String sql = "update oneline_memo set content = ? where _id = ?";
         Object[] params = {modifyStr, _id};
         db.execSQL(sql, params);
+    }
+
+    public void changeThemeColor(String color) {
+        String str = "25dp";
+        String sql = "update theme_color set actionbar = ? where textsize = ?";
+        Object[] params = {color, str};
+        db.execSQL(sql, params);
+    }
+    public ThemeItems getThemeColor() {
+        ThemeItems themeItems = null;
+        String sql = "select window, actionbar, background, textsize from theme_color";
+        Cursor cursor =  db.rawQuery(sql, null);
+        for(int i = 0;i<cursor.getCount(); i++) {
+            cursor.moveToNext();
+            themeItems = new ThemeItems();
+            themeItems.setWindow(cursor.getString(0));
+            themeItems.setActionbar(cursor.getString(1));
+            themeItems.setBackground(cursor.getString(2));
+            themeItems.setTextsize(cursor.getString(3));
+            Log.d("OBG","#" + cursor.getString(0) + " -> " + cursor.getString(1) + ", " + cursor.getString(2) + ", " + cursor.getString(3));
+        }
+        cursor.close();
+        return themeItems;
     }
 }

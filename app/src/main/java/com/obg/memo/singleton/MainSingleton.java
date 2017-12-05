@@ -1,21 +1,20 @@
-package com.obg.memo;
-
+package com.obg.memo.singleton;
 
 import android.content.Context;
 
-public class Singleton {
-    private static Singleton uniqueInstance;
+public class MainSingleton {
+    private static MainSingleton uniqueInstance;
     private Context mContext;
-    private Singleton(){}
+    private MainSingleton(){}
 
-    public static Singleton getInstance(Context context) {
+    public static MainSingleton getInstance(Context context) {
         if (uniqueInstance == null) {
-            uniqueInstance = new Singleton(context);
+            uniqueInstance = new MainSingleton(context);
         }
         return uniqueInstance;
     }
 
-    private Singleton(Context context) {
+    private MainSingleton(Context context) {
         mContext = context;
     }
     public Context getmContext() {

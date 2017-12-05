@@ -1,6 +1,6 @@
 package com.obg.memo;
 
-import android.app.ActionBar;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.Nullable;
@@ -14,6 +14,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.obg.memo.fragment.SetThemeFragment;
+import com.obg.memo.singleton.MainSingleton;
+import com.obg.memo.singleton.SettingSingleton;
 
 public class SettingsFragActivity extends AppCompatActivity {
     SetThemeFragment themeFragment;
@@ -47,5 +49,16 @@ public class SettingsFragActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    public void finishActivity() {
+        //Singleton singleton = Singleton.getInstance(MemoActivity.mContext);
+        //startActivity(new Intent(singleton.getmContext(), SettingsFragActivity.class));
+        //MainSingleton singleton = MainSingleton.getInstance(SettingActivity.mContext);
+        //Context context = singleton.getmContext();
+        //((MemoActivity) context).finish();
+        SettingSingleton singleton = SettingSingleton.getInstance(SettingActivity.mContext);
+        ((SettingActivity) singleton.getmContext()).finish();
+        finish();
     }
 }

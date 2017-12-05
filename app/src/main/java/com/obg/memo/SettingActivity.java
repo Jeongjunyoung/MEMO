@@ -14,18 +14,17 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
-import com.obg.memo.adapter.MemoListAdapter;
-
-import java.util.List;
+import com.obg.memo.singleton.MainSingleton;
 
 public class SettingActivity extends PreferenceActivity implements Preference.OnPreferenceClickListener, Preference.OnPreferenceChangeListener{
     private static final String SET_SORT = "set_memo_sort";
+    public static Context mContext;
     private ListPreference sortPre;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mContext = this;
         addPreferencesFromResource(R.xml.preference);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setStatusBarColor(getResources().getColor(R.color.fabPressed));
@@ -70,10 +69,14 @@ public class SettingActivity extends PreferenceActivity implements Preference.On
         if (preference == sortPre) {
             int index = sortPre.findIndexOfValue(value);
             sortPre.setSummary(sortPre.getEntries()[index]);
-            Singleton singleton = Singleton.getInstance(MemoActivity.mContext);
+            MainSingleton singleton = MainSingleton.getInstance(MemoActivity.mContext);
             Context context = singleton.getmContext();
             ((MemoActivity) context).setSort(index);
         }
         return true;
+    }
+
+    public void finishActivity() {
+        finish();
     }
 }

@@ -61,7 +61,6 @@ public class WriteActivity extends AppCompatActivity {
         dbHelper = new DBHelper(this);
         db = dbHelper.getDataBaseHelper();
         FloatingActionButton micBtn = (FloatingActionButton) findViewById(R.id.micBtn);
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setStatusBarColor(getResources().getColor(R.color.fabPressed));
             getSupportActionBar().setBackgroundDrawable(getDrawable(R.color.fabPrimary));

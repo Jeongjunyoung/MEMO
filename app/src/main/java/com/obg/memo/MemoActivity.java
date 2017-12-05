@@ -61,6 +61,9 @@ public class MemoActivity extends AppCompatActivity implements View.OnClickListe
     String date;
     Menu mMenu;
     List<MemoItem> listItem;
+    Drawable normalDrawable;
+    Drawable pressDrawable;
+    Drawable rippleDrawable;
     private DBHelper dbHelper;
     Animation viewAnim;
     Animation hideAnim;
@@ -73,6 +76,7 @@ public class MemoActivity extends AppCompatActivity implements View.OnClickListe
     long second_backBtn;
     int sort = 0;
     public static Context mContext;
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @SuppressLint("SimpleDateFormat")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +87,7 @@ public class MemoActivity extends AppCompatActivity implements View.OnClickListe
         mContext = this;
         dbHelper = new DBHelper(this);
         dbHelper.open();
+        ThemeItems themeItems = dbHelper.getThemeColor();
         list = (ListView) findViewById(R.id.listView);
         memoAdapter = new MemoListAdapter(this);
         list.setAdapter(memoAdapter);
@@ -100,6 +105,15 @@ public class MemoActivity extends AppCompatActivity implements View.OnClickListe
         writeCancelBtn.setOnClickListener(this);
         writeUpdateBtn.setOnClickListener(this);
         writeSaveBtn.setOnClickListener(this);
+        normalDrawable = (Drawable) getDrawable(R.color.fabPrimary);
+        pressDrawable = (Drawable) getDrawable(R.color.fabPressed);
+        rippleDrawable = (Drawable) getDrawable(R.color.fabPressed);
+        normalDrawable.setTint(Color.parseColor(themeItems.getActionbar()));
+        pressDrawable.setTint(Color.parseColor(themeItems.getWindow()));
+        rippleDrawable.setTint(Color.parseColor(themeItems.getWindow()));
+        addButton.setColorNormal(Color.parseColor(themeItems.getActionbar()));
+        //addButton.setColorPressed(R.color.fabPressed);
+        //addButton.setColorRipple(R.color.fabPressed);
         date = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date(System.currentTimeMillis()));
         //DB 값 ListView에 뿌려주기
         listItem = new ArrayList<MemoItem>();
@@ -117,9 +131,10 @@ public class MemoActivity extends AppCompatActivity implements View.OnClickListe
         memoAdapter.notifyDataSetChanged();
         list.setOnItemClickListener(new ListViewItemClickListener());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().setStatusBarColor(getResources().getColor(R.color.fabPressed));
+            getWindow().setStatusBarColor(Color.parseColor(themeItems.getWindow()));
             getSupportActionBar().setBackgroundDrawable(getDrawable(R.color.fabPrimary));
         }
+
     }
     //MENU
     @Override
@@ -274,6 +289,10 @@ public class MemoActivity extends AppCompatActivity implements View.OnClickListe
             memoAdapter.addItem(listItem.get(i));
         }
         memoAdapter.notifyDataSetChanged();
+    }
+
+    public void restart() {
+        recreate();
     }
     public void println(String string) {
         Log.d("OBG", "TEXT : " + string);
