@@ -13,7 +13,7 @@
                     android:id="@+id/listView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="#d9dcdf"
+                    android:background="#ede8e9ea"
                     android:choiceMode="multipleChoice" />
                 <com.melnykov.fab.FloatingActionButton
                     android:id="@+id/addBtn"
@@ -73,25 +73,30 @@
 
                 <Button
                     android:id="@+id/write_save_btn"
-                    android:layout_width="115dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:text="SAVE"
-                    android:visibility="gone" />
+                    android:visibility="gone"
+                    android:background="@drawable/button_shape"
+                    android:layout_marginRight="5dp"/>
 
                 <Button
                     android:id="@+id/write_update_btn"
-                    android:layout_width="115dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Modify" />
+                    android:text="Modify"
+                    android:background="@drawable/button_shape"
+                    android:layout_marginRight="5dp"/>
 
                 <Button
                     android:id="@+id/write_cancel_btn"
-                    android:layout_width="115dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="BACK" />
+                    android:text="BACK"
+                    android:background="@drawable/button_shape"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>

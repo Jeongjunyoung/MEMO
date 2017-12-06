@@ -5,7 +5,9 @@
     <color name="colorAccent">#8d8e8e</color>
 
     <!--floating action button-->
-    <color name="fabPrimary">#796c74</color>
+    <color name="fabPrimary">#6b6b6b</color>
     <color name="fabPressed">#9ca0a6</color>
     <color name="fabRipple">#878787</color>
+    <color name="changeBar">#878787</color>
+    <color name="test">#f2dfe1</color>
 </resources>

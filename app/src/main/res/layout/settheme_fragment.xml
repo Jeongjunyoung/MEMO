@@ -3,13 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:layout_marginTop="50dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="#ede8e9ea"
+        android:gravity="center|top">
+
+        <Button
+            android:id="@+id/saveBtn"
+            android:layout_width="170dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/theme_button_shape"
+            android:gravity="center"
+            android:text="SAVE" />
+    </LinearLayout>
 
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#d9dcdf"
+        android:background="#ede8e9ea"
         android:stretchColumns="*"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
@@ -18,22 +34,21 @@
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="23dp"
             android:padding="8dp">
 
             <Button
-                android:id="@+id/testBtn"
+                android:id="@+id/aBtn"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
-                android:text="What"
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
-                android:background="#6a708f"
+                android:background="#6d7073"
                 android:gravity="center"
-                android:textColor="#FFFFFF"
-                android:textSize="24sp"/>
+                android:textColor="#FFFFFF"/>
 
             <Button
+                android:id="@+id/bBtn"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -49,6 +64,7 @@
             android:padding="8dp">
 
             <Button
+                android:id="@+id/cBtn"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:layout_marginRight="20dp"
@@ -59,10 +75,11 @@
                 android:textSize="24sp"/>
 
             <Button
+                android:id="@+id/dBtn"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="#41004d"
+                android:background="#a254b1"
                 android:gravity="center"
                 android:textSize="24sp"/>
         </TableRow>
@@ -73,20 +90,22 @@
             android:padding="8dp">
 
             <Button
+                android:id="@+id/eBtn"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
-                android:background="#9bc0ce"
+                android:background="#dc888f"
                 android:gravity="center"
                 android:textColor="#FFFFFF"
                 android:textSize="24sp"/>
 
             <Button
+                android:id="@+id/fBtn"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="#41004d"
+                android:background="#f4d9851f"
                 android:gravity="center"
                 android:textSize="24sp" />
         </TableRow>
@@ -97,21 +116,23 @@
             android:padding="8dp">
 
             <Button
+                android:id="@+id/gBtn"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
-                android:background="#9bc0ce"
+                android:background="#3b3a3a"
                 android:gravity="center"
                 android:textColor="#FFFFFF"
                 android:textSize="24sp"
                 />
 
             <Button
+                android:id="@+id/hBtn"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="#41004d"
+                android:background="#1f2a69"
                 android:gravity="center"
                 android:textSize="24sp"/>
         </TableRow>

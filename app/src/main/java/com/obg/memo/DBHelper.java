@@ -31,9 +31,9 @@ public class DBHelper{
         @Override
         public void onCreate(SQLiteDatabase sqLiteDatabase) {
             sqLiteDatabase.execSQL("create table oneline_memo(_id integer primary key AUTOINCREMENT, content text, date text, res_id integer)");
-            sqLiteDatabase.execSQL("create table theme_color(window text, actionbar text, background text, textsize text)");
-            String sql = "insert into theme_color(window, actionbar, background, textsize) values(?,?,?,?)";
-            Object[] params = {"#9ca0a6", "#6d7073", "#d9dcdf", "25dp"};
+            sqLiteDatabase.execSQL("create table theme_color(_id integer, window text, actionbar text, background text, textsize text)");
+            String sql = "insert into theme_color(_id, window, actionbar, background, textsize) values(?,?,?,?,?)";
+            Object[] params = {1,"#9ca0a6", "#6d7073", "#d9dcdf", "25dp"};
             sqLiteDatabase.execSQL(sql, params);
         }
 
@@ -98,7 +98,7 @@ public class DBHelper{
             memoItem.setDate(cursor.getString(2));
             memoItem.setResId(cursor.getInt(3));
             list.add(memoItem);
-            Log.d("OBG","#" + _id + " -> " + content + ", " + date + ", " + resId);
+            //Log.d("OBG","#" + _id + " -> " + content + ", " + date + ", " + resId);
         }
         cursor.close();
         return list;
@@ -110,10 +110,13 @@ public class DBHelper{
         db.execSQL(sql, params);
     }
 
-    public void changeThemeColor(String color) {
-        String str = "25dp";
-        String sql = "update theme_color set actionbar = ? where textsize = ?";
-        Object[] params = {color, str};
+    public void changeThemeColor(ThemeItems items) {
+        String actionbar = items.getActionbar();
+        String window = items.getWindow();
+        String background = items.getBackground();
+        Log.d("DB", "" +actionbar + " : " + window);
+        String sql = "update theme_color set actionbar = ?, window = ?, background =? where _id = "+1;
+        Object[] params = {actionbar, window, background};
         db.execSQL(sql, params);
     }
     public ThemeItems getThemeColor() {
@@ -127,7 +130,7 @@ public class DBHelper{
             themeItems.setActionbar(cursor.getString(1));
             themeItems.setBackground(cursor.getString(2));
             themeItems.setTextsize(cursor.getString(3));
-            Log.d("OBG","#" + cursor.getString(0) + " -> " + cursor.getString(1) + ", " + cursor.getString(2) + ", " + cursor.getString(3));
+            //Log.d("OBG","#" + cursor.getString(0) + " -> " + cursor.getString(1) + ", " + cursor.getString(2) + ", " + cursor.getString(3));
         }
         cursor.close();
         return themeItems;

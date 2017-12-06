@@ -5,21 +5,22 @@
     >
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="#e2e2e2"
-        android:orientation="horizontal">
+        android:layout_height="1dp"
+        android:background="#dedbdb"
+        android:orientation="horizontal"
+        android:layout_marginTop="5dp">
 
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="3dp"
-        android:background="#fffefe"
+        android:layout_height="4dp"
+        android:background="#f9f7f7"
         android:orientation="horizontal">
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="1dp"
-        android:background="#e3edecec"
+        android:background="#f6dfdfdf"
         android:orientation="horizontal">
     </LinearLayout>
 </LinearLayout>

@@ -4,6 +4,7 @@ import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.os.Build;
 import android.speech.RecognitionListener;
 import android.speech.RecognizerIntent;
@@ -31,6 +32,7 @@ import android.support.v7.app.ActionBar;
 
 import com.melnykov.fab.FloatingActionButton;
 import com.obg.memo.adapter.MemoListAdapter;
+import com.obg.memo.singleton.MainSingleton;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -62,7 +64,8 @@ public class WriteActivity extends AppCompatActivity {
         db = dbHelper.getDataBaseHelper();
         FloatingActionButton micBtn = (FloatingActionButton) findViewById(R.id.micBtn);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            getWindow().setStatusBarColor(getResources().getColor(R.color.fabPressed));
+            ThemeItems themeItems = dbHelper.getThemeColor();
+            getWindow().setStatusBarColor(Color.parseColor(themeItems.getWindow()));
             getSupportActionBar().setBackgroundDrawable(getDrawable(R.color.fabPrimary));
         }
         micBtn.setOnClickListener(new View.OnClickListener() {
@@ -107,7 +110,8 @@ public class WriteActivity extends AppCompatActivity {
                 String sql = "insert into oneline_memo(content, date, res_id) values(?,?,?)";
                 Object[] params = {contentEditText, date, resId};
                 db.execSQL(sql, params);
-                startActivity(intent);
+                MainSingleton singleton = MainSingleton.getInstance(MemoActivity.mContext);
+                ((MemoActivity) singleton.getmContext()).changeValues();
                 finish();
                 return true;
         }

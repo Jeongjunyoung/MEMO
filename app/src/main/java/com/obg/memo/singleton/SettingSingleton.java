@@ -2,29 +2,20 @@ package com.obg.memo.singleton;
 
 import android.content.Context;
 
-/**
- * Created by d1jun on 2017-12-05.
- */
 
 public class SettingSingleton {
-    private static SettingSingleton uniqueInstance;
+    private static SettingSingleton instance;
     private Context mContext;
     private SettingSingleton(){}
 
     public static SettingSingleton getInstance(Context context) {
-        if (uniqueInstance == null) {
-            uniqueInstance = new SettingSingleton(context);
+        if (instance == null) {
+            instance = new SettingSingleton(context);
         }
-        return uniqueInstance;
+        return instance;
     }
-    public SettingSingleton(Context mContext) {
-        this.mContext = mContext;
-    }
-    public static SettingSingleton getUniqueInstance() {
-        return uniqueInstance;
-    }
-    public static void setUniqueInstance(SettingSingleton uniqueInstance) {
-        SettingSingleton.uniqueInstance = uniqueInstance;
+    private SettingSingleton(Context context) {
+        mContext = context;
     }
     public Context getmContext() {
         return mContext;

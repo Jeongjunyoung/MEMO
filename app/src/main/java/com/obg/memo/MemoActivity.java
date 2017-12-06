@@ -112,8 +112,8 @@ public class MemoActivity extends AppCompatActivity implements View.OnClickListe
         pressDrawable.setTint(Color.parseColor(themeItems.getWindow()));
         rippleDrawable.setTint(Color.parseColor(themeItems.getWindow()));
         addButton.setColorNormal(Color.parseColor(themeItems.getActionbar()));
-        //addButton.setColorPressed(R.color.fabPressed);
-        //addButton.setColorRipple(R.color.fabPressed);
+        addButton.setColorPressed(R.color.fabPressed);
+        addButton.setColorRipple(R.color.fabPressed);
         date = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date(System.currentTimeMillis()));
         //DB 값 ListView에 뿌려주기
         listItem = new ArrayList<MemoItem>();
@@ -226,7 +226,6 @@ public class MemoActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.addBtn:
                 Intent intent = new Intent(MemoActivity.this, WriteActivity.class);
                 startActivity(intent);
-                finish();
                 break;
             case R.id.write_cancel_btn:
                 list.setEnabled(true);
@@ -280,7 +279,9 @@ public class MemoActivity extends AppCompatActivity implements View.OnClickListe
             memo_editText.setVisibility(View.GONE);
         }
     }
-
+    public void changeValues() {
+        setSort(sort);
+    }
     public void setSort(int sort) {
         listItem.clear();
         memoAdapter.memoAdapterItemClear();

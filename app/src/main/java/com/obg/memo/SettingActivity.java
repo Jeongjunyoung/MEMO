@@ -21,15 +21,17 @@ public class SettingActivity extends PreferenceActivity implements Preference.On
     private static final String SET_SORT = "set_memo_sort";
     public static Context mContext;
     private ListPreference sortPre;
+    private DBHelper dbHelper;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mContext = this;
+        dbHelper = new DBHelper(this);
         addPreferencesFromResource(R.xml.preference);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setStatusBarColor(getResources().getColor(R.color.fabPressed));
         }
-        getListView().setBackgroundColor(Color.parseColor("#FFD9DCDF"));
+        getListView().setBackgroundColor(Color.parseColor("#ede8e9ea"));
         sortPre = (ListPreference) findPreference(SET_SORT);
         Preference setTheme = (Preference) findPreference("key_setTheme");
         setTheme.setOnPreferenceClickListener(this);
@@ -45,6 +47,8 @@ public class SettingActivity extends PreferenceActivity implements Preference.On
         Toolbar bar = (Toolbar) LayoutInflater.from(this).inflate(R.layout.setting_toolbar, root, false);
         bar.setBackgroundDrawable(getDrawable(R.color.fabPrimary));
         root.addView(bar, 0); // insert at top
+        ThemeItems themeItems = dbHelper.getThemeColor();
+        getWindow().setStatusBarColor(Color.parseColor(themeItems.getWindow()));
         bar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
