@@ -1,6 +1,7 @@
 package com.obg.memo;
 
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -117,8 +118,8 @@ public class WriteActivity extends AppCompatActivity {
                 String sql = "insert into oneline_memo(content, date, res_id) values(?,?,?)";
                 Object[] params = {contentEditText, date, resId};
                 db.execSQL(sql, params);
-                MainSingleton singleton = MainSingleton.getInstance(MemoActivity.mContext);
-                ((MemoActivity) singleton.getmContext()).changeValues();
+                //MainSingleton singleton = MainSingleton.getInstance(MemoActivity.mContext);
+                ((MemoActivity) MemoActivity.mContext).changeValues();
                 finish();
                 return true;
         }
