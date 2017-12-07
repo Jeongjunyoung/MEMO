@@ -4,7 +4,7 @@
 
     <item
         android:id="@+id/delete_list"
-        android:icon="@drawable/delete_icon"
+        android:icon="@drawable/delete_icon2"
         android:title="deleteSel"
         app:showAsAction="always" />
     <item
@@ -14,7 +14,7 @@
         app:showAsAction="always" />
     <item
         android:id="@+id/remove_list"
-        android:icon="@drawable/remove_icon2"
+        android:icon="@drawable/remove_list_icon"
         android:title="remove"
         app:showAsAction="always"
         android:visible="false"/>

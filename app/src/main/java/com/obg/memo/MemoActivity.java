@@ -74,7 +74,7 @@ public class MemoActivity extends AppCompatActivity implements View.OnClickListe
     int updateId;
     long first_backBtn;
     long second_backBtn;
-    int sort = 0;
+    int sort;
     public static Context mContext;
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @SuppressLint("SimpleDateFormat")
@@ -115,11 +115,15 @@ public class MemoActivity extends AppCompatActivity implements View.OnClickListe
         addButton.setColorPressed(R.color.fabPressed);
         addButton.setColorRipple(R.color.fabPressed);
         date = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date(System.currentTimeMillis()));
-        //DB 값 ListView에 뿌려주기
         listItem = new ArrayList<MemoItem>();
+        Intent intent = getIntent();
+        if (intent.getStringExtra("widgetAdd") != null) {
+            Intent writeStartIntent = new Intent(mContext, WriteActivity.class);
+            startActivity(writeStartIntent);
+        }
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
         String sort_SetValue = pref.getString("set_memo_sort","");
-        if (sort_SetValue.equals("0") && sort_SetValue.equals("1")) {
+        if (sort_SetValue.equals("0") || sort_SetValue.equals("1")) {
             sort = Integer.parseInt(sort_SetValue);
         }else{
             sort = 0;

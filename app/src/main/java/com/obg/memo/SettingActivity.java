@@ -10,6 +10,7 @@ import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
+import android.support.v7.app.ActionBar;
 import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;

@@ -7,7 +7,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="42dp"
-        android:background="#599de1"
+        android:background="@drawable/widget_layout_shape"
         android:orientation="horizontal">
 
         <TextView
@@ -17,19 +17,21 @@
             android:layout_weight="70"
             android:gravity="center|left"
             android:textSize="30dp"/>
-        <Button
+        <ImageButton
             android:id="@+id/widget_item_add"
-            android:layout_width="50dp"
-            android:layout_height="40dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="right"
-            android:text="ADD"
-            android:layout_weight="1"/>
-        <Button
+            android:layout_weight="1"
+            android:src="@drawable/widget_add_icon"
+            android:background="@android:color/transparent"/>
+        <ImageButton
             android:id="@+id/widget_item_refresh"
             android:layout_width="50dp"
             android:layout_height="40dp"
             android:layout_gravity="right"
-            android:text="Refresh"
+            android:src="@drawable/widget_refresh_icon"
+            android:background="@android:color/transparent"
             android:layout_weight="1"/>
     </LinearLayout>
     <ListView

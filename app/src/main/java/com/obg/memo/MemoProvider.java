@@ -1,5 +1,6 @@
 package com.obg.memo;
 
+import android.annotation.SuppressLint;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
@@ -41,14 +42,17 @@ public class MemoProvider extends AppWidgetProvider {
 
         PendingIntent btn_click = PendingIntent.getBroadcast(context, 0, new Intent(REFRESH_BTN), PendingIntent.FLAG_UPDATE_CURRENT);
         remoteView.setOnClickPendingIntent(R.id.widget_item_refresh, btn_click);
-
-        Intent i = new Intent(Intent.ACTION_MAIN);
+        PendingIntent add_click = PendingIntent.getBroadcast(context, 0, new Intent(ADD_BTN), PendingIntent.FLAG_UPDATE_CURRENT);
+        remoteView.setOnClickPendingIntent(R.id.widget_item_add, add_click);
+        /*Intent i = new Intent(Intent.ACTION_MAIN);
+        i.setClass(context, MemoActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
         i.addCategory(Intent.CATEGORY_LAUNCHER);
-        i.setComponent(new ComponentName(context, WriteActivity.class));
+        //i.setComponent(new ComponentName(context, WriteActivity.class));
+        //Intent i = new Intent(context, WriteActivity.class);
         PendingIntent add_click = PendingIntent.getActivity(context, 0, i, 0);
         //PendingIntent  = PendingIntent.getBroadcast(context, 0, new Intent(ADD_BTN), PendingIntent.FLAG_UPDATE_CURRENT);
-        remoteView.setOnClickPendingIntent(R.id.widget_item_add, add_click);
-
+        remoteView.setOnClickPendingIntent(R.id.widget_item_add, add_click);*/
         Intent itemIntent = new Intent(Intent.ACTION_VIEW);
         PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, itemIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         remoteView.setPendingIntentTemplate(R.id.list_view, pendingIntent);
@@ -65,6 +69,18 @@ public class MemoProvider extends AppWidgetProvider {
             appWidgetManager.notifyAppWidgetViewDataChanged(ids, R.id.list_view);
             Toast.makeText(context, "새로고침", Toast.LENGTH_SHORT).show();
         } else if (action.equals(ADD_BTN)) {
+            //RemoteViews remoteView = new RemoteViews(context.getPackageName(), R.layout.memo_widget);
+            /*Intent i = new Intent(Intent.ACTION_MAIN);
+            i.setClass(context, WriteActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_RESET_TASK_IF_NEEDED);
+            i.addCategory(Intent.CATEGORY_LAUNCHER);
+            PendingIntent add_click = PendingIntent.getActivity(context, 0, i, 0);
+            remoteView.setOnClickPendingIntent(R.id.widget_item_add, add_click);*/
+            Intent i = new Intent(context, MemoActivity.class);
+            i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            i.putExtra("widgetAdd", "true");
+            context.startActivity(i);
+            //Toast.makeText(context, "zzz", Toast.LENGTH_SHORT).show();
         }
     }
 

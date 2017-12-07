@@ -48,6 +48,7 @@ public class WriteActivity extends AppCompatActivity {
     Intent micIntent;
     SpeechRecognizer mRecognizer;
     SQLiteDatabase db;
+    ThemeItems themeItems;
     //ListView list;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,9 +63,15 @@ public class WriteActivity extends AppCompatActivity {
         memoAdapter = new MemoListAdapter(this);
         dbHelper = new DBHelper(this);
         db = dbHelper.getDataBaseHelper();
+        themeItems = dbHelper.getThemeColor();
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setHomeButtonEnabled(true);
         FloatingActionButton micBtn = (FloatingActionButton) findViewById(R.id.micBtn);
+        micBtn.setColorNormal(Color.parseColor(themeItems.getActionbar()));
+        micBtn.setColorPressed(Color.parseColor(themeItems.getWindow()));
+        micBtn.setColorRipple(Color.parseColor(themeItems.getWindow()));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            ThemeItems themeItems = dbHelper.getThemeColor();
             getWindow().setStatusBarColor(Color.parseColor(themeItems.getWindow()));
             getSupportActionBar().setBackgroundDrawable(getDrawable(R.color.fabPrimary));
         }
@@ -99,11 +106,11 @@ public class WriteActivity extends AppCompatActivity {
                 Intent intent = new Intent(WriteActivity.this, MemoActivity.class);
                 int resId = 0;
                 if (item_index == 0) {
-                    resId = R.drawable.important_0;
+                    resId = R.drawable.important_2;
                 } else if (item_index == 1) {
                     resId = R.drawable.important_1;
                 } else if (item_index == 2) {
-                    resId = R.drawable.important_2;
+                    resId = R.drawable.important_0;
                 }
                 String contentEditText = String.valueOf(memo_EditText.getText());
                 //dbHelper.insert(contentEditText, date, resId);
@@ -130,8 +137,8 @@ public class WriteActivity extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(WriteActivity.this, MemoActivity.class);
-        startActivity(intent);
+        //Intent intent = new Intent(WriteActivity.this, MemoActivity.class);
+        //startActivity(intent);
         finish();
     }
     //@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)

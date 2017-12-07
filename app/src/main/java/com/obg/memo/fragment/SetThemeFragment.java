@@ -1,26 +1,19 @@
 package com.obg.memo.fragment;
 
-import android.content.Context;
-import android.net.sip.SipSession;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 import com.obg.memo.DBHelper;
-import com.obg.memo.MemoActivity;
 import com.obg.memo.R;
-import com.obg.memo.SettingActivity;
 import com.obg.memo.SettingsFragActivity;
 import com.obg.memo.ThemeItems;
-import com.obg.memo.singleton.MainSingleton;
 
 /**
  * Created by d1jun on 2017-12-01.
@@ -78,53 +71,54 @@ public class SetThemeFragment extends Fragment implements View.OnClickListener{
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onClick(View view) {
+
         switch (view.getId()){
             case R.id.aBtn:
                 themeItems = setThemeItems("#6d7073", "#9ca0a6");
+                ((SettingsFragActivity) getActivity()).setColorItems(themeItems);
                 changeActionBar("#6d7073");
                 break;
             case R.id.bBtn:
                 themeItems = setThemeItems("#aca98f", "#cfcdb5");
+                ((SettingsFragActivity) getActivity()).setColorItems(themeItems);
                 //themeItems.setBackground("#eae9e0");
                 changeActionBar("#aca98f");
                 break;
             case R.id.cBtn:
                 themeItems = setThemeItems("#9bc0ce", "#c5d9e1");
+                ((SettingsFragActivity) getActivity()).setColorItems(themeItems);
                 //themeItems.setBackground("#e2ebef");
                 changeActionBar("#9bc0ce");
                 break;
             case R.id.dBtn:
                 themeItems = setThemeItems("#a254b1", "#b992c1");
+                ((SettingsFragActivity) getActivity()).setColorItems(themeItems);
                 //themeItems.setBackground("#e0c8e6");
                 changeActionBar("#a254b1");
                 break;
             case R.id.eBtn:
                 themeItems = setThemeItems("#dc888f", "#f2dfe1");
+                ((SettingsFragActivity) getActivity()).setColorItems(themeItems);
                 //themeItems.setBackground("#f4d6d9");
                 changeActionBar("#dc888f");
                 break;
             case R.id.fBtn:
                 themeItems = setThemeItems("#f4d9851f", "#f4efba79");
+                ((SettingsFragActivity) getActivity()).setColorItems(themeItems);
                 //themeItems.setBackground("#edd4b4");
                 changeActionBar("#f4d9851f");
                 break;
             case R.id.gBtn:
                 themeItems = setThemeItems("#3b3a3a", "#a7a5a5");
+                ((SettingsFragActivity) getActivity()).setColorItems(themeItems);
                 //themeItems.setBackground("#d1cece");
                 changeActionBar("#3b3a3a");
                 break;
             case R.id.hBtn:
                 themeItems = setThemeItems("#1f2a69", "#8f9be4");
+                ((SettingsFragActivity) getActivity()).setColorItems(themeItems);
                 //themeItems.setBackground("#d5d9f2");
                 changeActionBar("#1f2a69");
-                break;
-            case R.id.saveBtn:
-                if (themeItems != null) {
-                    db.changeThemeColor(themeItems);
-                }
-                MainSingleton singleton = MainSingleton.getInstance(MemoActivity.mContext);
-                ((MemoActivity) singleton.getmContext()).restart();
-                ((SettingsFragActivity)getActivity()).finishActivity();
                 break;
         }
     }
