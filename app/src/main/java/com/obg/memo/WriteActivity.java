@@ -50,6 +50,8 @@ public class WriteActivity extends AppCompatActivity {
     SpeechRecognizer mRecognizer;
     SQLiteDatabase db;
     ThemeItems themeItems;
+    String writeMode = "write";
+    int updateId;
     //ListView list;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +74,27 @@ public class WriteActivity extends AppCompatActivity {
         micBtn.setColorNormal(Color.parseColor(themeItems.getActionbar()));
         micBtn.setColorPressed(Color.parseColor(themeItems.getWindow()));
         micBtn.setColorRipple(Color.parseColor(themeItems.getWindow()));
+        Intent getIntentMode = getIntent();
+        if (getIntentMode.getStringExtra("mode").equals("modifyMode")) {
+            Toast.makeText(this, "Modify Mode", Toast.LENGTH_SHORT).show();
+            String contentStr = getIntentMode.getStringExtra("contentStr");
+            writeMode = "modify";
+            updateId = getIntentMode.getIntExtra("updateId", 1);
+            int resId = getIntentMode.getIntExtra("resId", 1);
+            int item_index = 0;
+            memo_EditText.setText(contentStr);
+            memo_EditText.setSelection(memo_EditText.length());
+            if (resId == R.drawable.important_0) {
+                item_index = 2;
+            } else if (resId == R.drawable.important_1) {
+                item_index = 1;
+            } else {
+                item_index = 0;
+            }
+            iSpinner.setSelection(item_index);
+        } else if (getIntentMode.getStringExtra("mode").equals("writeMode")) {
+            writeMode = "write";
+        }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setStatusBarColor(Color.parseColor(themeItems.getWindow()));
             getSupportActionBar().setBackgroundDrawable(getDrawable(R.color.fabPrimary));
@@ -104,6 +127,7 @@ public class WriteActivity extends AppCompatActivity {
         switch(curId){
             case R.id.memo_add:
                 int item_index = iSpinner.getSelectedItemPosition();
+                String contentEditText = String.valueOf(memo_EditText.getText());
                 Intent intent = new Intent(WriteActivity.this, MemoActivity.class);
                 int resId = 0;
                 if (item_index == 0) {
@@ -113,12 +137,16 @@ public class WriteActivity extends AppCompatActivity {
                 } else if (item_index == 2) {
                     resId = R.drawable.important_0;
                 }
-                String contentEditText = String.valueOf(memo_EditText.getText());
-                //dbHelper.insert(contentEditText, date, resId);
-                String sql = "insert into oneline_memo(content, date, res_id) values(?,?,?)";
-                Object[] params = {contentEditText, date, resId};
-                db.execSQL(sql, params);
-                //MainSingleton singleton = MainSingleton.getInstance(MemoActivity.mContext);
+                if (writeMode.equals("write")) {
+                    //dbHelper.insert(contentEditText, date, resId);
+                    String sql = "insert into oneline_memo(content, date, res_id) values(?,?,?)";
+                    Object[] params = {contentEditText, date, resId};
+                    db.execSQL(sql, params);
+                    //MainSingleton singleton = MainSingleton.getInstance(MemoActivity.mContext);
+                } else if (writeMode.equals("modify")) {
+                    ((MemoActivity) MemoActivity.mContext).setTextView(contentEditText);
+                    dbHelper.modifyData(contentEditText, resId,updateId);
+                }
                 ((MemoActivity) MemoActivity.mContext).changeValues();
                 finish();
                 return true;
@@ -133,7 +161,7 @@ public class WriteActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK && (requestCode == RESULT_SPEECH)) {
             ArrayList<String> sttResult = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
             String result_stt = sttResult.get(0);
-            memo_EditText.setText(""+result_stt);
+            memo_EditText.append(""+result_stt);
         }
     }
     @Override

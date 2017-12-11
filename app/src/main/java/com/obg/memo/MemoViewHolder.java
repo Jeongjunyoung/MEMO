@@ -12,4 +12,5 @@ public class MemoViewHolder {
     public ImageView imageView;
     public CheckBox checkBox;
     public int list_position;
+    public int resId;
 }

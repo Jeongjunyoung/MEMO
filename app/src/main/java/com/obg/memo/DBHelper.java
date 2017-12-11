@@ -104,9 +104,9 @@ public class DBHelper{
         return list;
     }
 
-    public void modifyData(String modifyStr, int _id) {
-        String sql = "update oneline_memo set content = ? where _id = ?";
-        Object[] params = {modifyStr, _id};
+    public void modifyData(String modifyStr, int resId, int _id) {
+        String sql = "update oneline_memo set content = ?, res_id = ? where _id = ?";
+        Object[] params = {modifyStr, resId,_id};
         db.execSQL(sql, params);
     }
 

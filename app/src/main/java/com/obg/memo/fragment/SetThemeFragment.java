@@ -29,7 +29,6 @@ public class SetThemeFragment extends Fragment implements View.OnClickListener{
     private Button fBtn;
     private Button gBtn;
     private Button hBtn;
-    private Button saveBtn;
     ThemeItems themeItems;
     @Nullable
     @Override
@@ -44,7 +43,6 @@ public class SetThemeFragment extends Fragment implements View.OnClickListener{
         fBtn = (Button) rootView.findViewById(R.id.fBtn);
         gBtn = (Button) rootView.findViewById(R.id.gBtn);
         hBtn = (Button) rootView.findViewById(R.id.hBtn);
-        saveBtn = (Button) rootView.findViewById(R.id.saveBtn);
         aBtn.setOnClickListener(this);
         bBtn.setOnClickListener(this);
         cBtn.setOnClickListener(this);
@@ -53,7 +51,6 @@ public class SetThemeFragment extends Fragment implements View.OnClickListener{
         fBtn.setOnClickListener(this);
         gBtn.setOnClickListener(this);
         hBtn.setOnClickListener(this);
-        saveBtn.setOnClickListener(this);
         return rootView;
     }
 

@@ -10,14 +10,6 @@
         android:layout_height="48dp"
         android:background="#ede8e9ea"
         android:gravity="center|top">
-
-        <Button
-            android:id="@+id/saveBtn"
-            android:layout_width="170dp"
-            android:layout_height="30dp"
-            android:background="@drawable/theme_button_shape"
-            android:gravity="center"
-            android:text="SAVE" />
     </LinearLayout>
 
     <TableLayout

@@ -54,7 +54,6 @@ import java.util.List;
 
 public class MemoActivity extends AppCompatActivity implements View.OnClickListener{
     LinearLayout memo;
-    EditText memo_editText;
     TextView memo_textView;
     ListView list;
     MemoListAdapter memoAdapter;
@@ -70,7 +69,6 @@ public class MemoActivity extends AppCompatActivity implements View.OnClickListe
     private FloatingActionButton addButton;
     private Button writeCancelBtn;
     private Button writeUpdateBtn;
-    private Button writeSaveBtn;
     int updateId;
     long first_backBtn;
     long second_backBtn;
@@ -93,18 +91,15 @@ public class MemoActivity extends AppCompatActivity implements View.OnClickListe
         list.setAdapter(memoAdapter);
         list.setClickable(true);
         memo = (LinearLayout) findViewById(R.id.memo);
-        memo_editText = (EditText) findViewById(R.id.memo_editText);
         memo_textView = (TextView) findViewById(R.id.memo_textView);
         addButton = (FloatingActionButton) findViewById(R.id.addBtn);
         viewAnim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.flow);
         hideAnim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.hide);
         writeCancelBtn = (Button) findViewById(R.id.write_cancel_btn);
         writeUpdateBtn = (Button) findViewById(R.id.write_update_btn);
-        writeSaveBtn = (Button) findViewById(R.id.write_save_btn);
         addButton.setOnClickListener(this);
         writeCancelBtn.setOnClickListener(this);
         writeUpdateBtn.setOnClickListener(this);
-        writeSaveBtn.setOnClickListener(this);
         normalDrawable = (Drawable) getDrawable(R.color.fabPrimary);
         pressDrawable = (Drawable) getDrawable(R.color.fabPressed);
         rippleDrawable = (Drawable) getDrawable(R.color.fabPressed);
@@ -116,9 +111,10 @@ public class MemoActivity extends AppCompatActivity implements View.OnClickListe
         addButton.setColorRipple(R.color.fabPressed);
         date = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date(System.currentTimeMillis()));
         listItem = new ArrayList<MemoItem>();
-        Intent intent = getIntent();
-        if (intent.getStringExtra("widgetAdd") != null) {
+        Intent gIntent = getIntent();
+        if (gIntent.getStringExtra("widgetAdd") != null) {
             Intent writeStartIntent = new Intent(mContext, WriteActivity.class);
+            writeStartIntent.putExtra("mode", "writeMode");
             startActivity(writeStartIntent);
         }
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
@@ -196,32 +192,14 @@ public class MemoActivity extends AppCompatActivity implements View.OnClickListe
         }
         memoAdapter.toggleCheckbox(bClick);
     }
-
-    /*@Override
-        public void colorChanged(int color1) {
-        PreferenceManager.getDefaultSharedPreferences(this).edit().putInt("color", color1).commit();
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            Drawable fabPrimary = getResources().getDrawable(R.color.fabPrimary);
-            Drawable fabPressed = getResources().getDrawable(R.color.colorAccent);
-            println(String.valueOf(color1));
-            fabPrimary.setTint(color1);
-            fabPressed.setColorFilter(color1, PorterDuff.Mode.SRC_IN);
-            addButton.setColorNormal(color1);
-            getWindow().setStatusBarColor(getResources().getColor(R.color.colorAccent));
-            getSupportActionBar().setBackgroundDrawable(getDrawable(R.color.fabPrimary));
-        }
-    }*/
-
     private class ListViewItemClickListener implements AdapterView.OnItemClickListener{
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int position, long l) {
             updateId = memoAdapter.getUpdateText(position);
             list.setEnabled(false);
             memo_textView.setText(listItem.get(position).getContent());
-            memo_editText.setText(listItem.get(position).getContent());
             memo.setVisibility(View.VISIBLE);
             memo.startAnimation(viewAnim);
-            println(String.valueOf(updateId));
         }
     }
     @Override
@@ -229,26 +207,23 @@ public class MemoActivity extends AppCompatActivity implements View.OnClickListe
         switch (view.getId()) {
             case R.id.addBtn:
                 Intent intent = new Intent(MemoActivity.this, WriteActivity.class);
+                intent.putExtra("mode", "writeMode");
                 startActivity(intent);
                 break;
             case R.id.write_cancel_btn:
                 list.setEnabled(true);
-                setModifyMode(false);
                 memo.setVisibility(View.GONE);
                 memo.startAnimation(hideAnim);
                 break;
             case R.id.write_update_btn:
-                setModifyMode(true);
-                break;
-            case R.id.write_save_btn:
-                String modifyStr = memo_editText.getText().toString();
-                setModifyMode(false);
-                memo_textView.setText(modifyStr);
-                int position = memoAdapter.modifyList(modifyStr, updateId);
-                listItem.get(position).setContent(modifyStr);
-                memoAdapter.notifyDataSetChanged();
-                dbHelper.modifyData(modifyStr, updateId);
-                Toast.makeText(this, "UPDATE SUCCESS", Toast.LENGTH_SHORT).show();
+                //setModifyMode(true);
+                Intent modifyIntent = new Intent(mContext, WriteActivity.class);
+                String value = memo_textView.getText().toString();
+                modifyIntent.putExtra("mode", "modifyMode");
+                modifyIntent.putExtra("contentStr", value);
+                modifyIntent.putExtra("updateId", updateId);
+                modifyIntent.putExtra("resId", memoAdapter.getResId(updateId));
+                startActivity(modifyIntent);
                 break;
         }
     }
@@ -261,26 +236,11 @@ public class MemoActivity extends AppCompatActivity implements View.OnClickListe
             list.setEnabled(true);
             memo.setVisibility(View.GONE);
             memo.startAnimation(hideAnim);
-            setModifyMode(false);
         }else if(second_backBtn - first_backBtn < 2000){
             super.onBackPressed();
         }else{
             Toast.makeText(this, "한번 더 누르면 종료됩니다.", Toast.LENGTH_SHORT).show();
             first_backBtn = System.currentTimeMillis();
-        }
-    }
-
-    public void setModifyMode(boolean mode) {
-        if (mode) {
-            writeSaveBtn.setVisibility(View.VISIBLE);
-            writeUpdateBtn.setVisibility(View.GONE);
-            memo_textView.setVisibility(View.GONE);
-            memo_editText.setVisibility(View.VISIBLE);
-        } else {
-            writeSaveBtn.setVisibility(View.GONE);
-            writeUpdateBtn.setVisibility(View.VISIBLE);
-            memo_textView.setVisibility(View.VISIBLE);
-            memo_editText.setVisibility(View.GONE);
         }
     }
     public void changeValues() {
@@ -296,6 +256,9 @@ public class MemoActivity extends AppCompatActivity implements View.OnClickListe
         memoAdapter.notifyDataSetChanged();
     }
 
+    public void setTextView(String content) {
+        memo_textView.setText(content);
+    }
     public void restart() {
         recreate();
     }

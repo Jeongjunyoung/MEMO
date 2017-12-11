@@ -84,9 +84,9 @@ public class MemoListAdapter extends BaseAdapter {
         holder.checkBox = (CheckBox) convertView.findViewById(R.id.checkBox);
         holder.checkBox.setId(memoItem.get_id());
         holder.list_position = position;
+        holder.resId = memoItem.getResId();
         convertViewList.add(convertView);
         convertView.setTag(holder);
-        //Log.d("GETView", holder.memoContent.getText() + " :  " + memoItem.get_id());
         /*} else {
             convertView = convertViewList.get(position);
             holder = (MemoViewHolder) convertView.getTag();
@@ -169,6 +169,19 @@ public class MemoListAdapter extends BaseAdapter {
         MemoItem memoItem = items.get(position);
         memoItem.setContent(modifyStr);
         return position;
+    }
+
+    public int getResId(int _id) {
+        int resId = 0;
+        View view;
+        for(int i=0;i<convertViewList.size();i++) {
+            view = convertViewList.get(i);
+            MemoViewHolder holder = (MemoViewHolder) view.getTag();
+            if (holder.checkBox.getId() == _id) {
+                resId = holder.resId;
+            }
+        }
+        return resId;
     }
     public void memoAdapterItemClear() {
         items.clear();

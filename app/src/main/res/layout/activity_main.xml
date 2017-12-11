@@ -44,16 +44,6 @@
             android:layout_weight="2"
             android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/memo_editText"
-                android:layout_width="350dp"
-                android:layout_height="381dp"
-                android:layout_gravity="top|center"
-                android:layout_marginTop="30dp"
-                android:background="@drawable/text_rounded"
-                android:scrollbars="vertical"
-                android:visibility="gone"
-                android:gravity="top"/>
             <TextView
                 android:id="@+id/memo_textView"
                 android:layout_width="350dp"
@@ -70,17 +60,6 @@
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:orientation="horizontal">
-
-                <Button
-                    android:id="@+id/write_save_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="SAVE"
-                    android:visibility="gone"
-                    android:background="@drawable/button_shape"
-                    android:layout_marginRight="5dp"/>
-
                 <Button
                     android:id="@+id/write_update_btn"
                     android:layout_width="wrap_content"
