@@ -24,7 +24,7 @@
             android:icon="@drawable/developer_icon"/>
         <Preference
             android:title="Version"
-            android:summary="1.00"
+            android:summary="1.01"
             android:icon="@drawable/version_icon"/>
     </PreferenceCategory>
 </PreferenceScreen>

@@ -49,6 +49,7 @@ public class MemoActivity extends AppCompatActivity implements View.OnClickListe
     private DBHelper dbHelper;
     Animation viewAnim;
     Animation hideAnim;
+    SharedPreferences pref;
     private FloatingActionButton addButton;
     private Button writeCancelBtn;
     private Button writeUpdateBtn;
@@ -103,13 +104,14 @@ public class MemoActivity extends AppCompatActivity implements View.OnClickListe
             writeStartIntent.putExtra("mode", "writeMode");
             startActivity(writeStartIntent);
         }
-        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(this);
-        String sort_SetValue = pref.getString("set_memo_sort","");
+        pref = PreferenceManager.getDefaultSharedPreferences(this);
+        /*String sort_SetValue = pref.getString("set_memo_sort","");
         if (sort_SetValue.equals("0") || sort_SetValue.equals("1")) {
             sort = Integer.parseInt(sort_SetValue);
         }else{
             sort = 0;
-        }
+        }*/
+        sort = getSortValue();
         listItem = dbHelper.selectData(sort);
         for(int i=0;i<listItem.size();i++) {
             memoAdapter.addItem(listItem.get(i));
@@ -229,6 +231,7 @@ public class MemoActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
     public void changeValues() {
+        sort = getSortValue();
         setSort(sort);
     }
     public void setSort(int sort) {
@@ -240,7 +243,14 @@ public class MemoActivity extends AppCompatActivity implements View.OnClickListe
         }
         memoAdapter.notifyDataSetChanged();
     }
-
+    public int getSortValue() {
+        String sort_SetValue = pref.getString("set_memo_sort","");
+        int getSort = 0;
+        if (sort_SetValue.equals("0") || sort_SetValue.equals("1")) {
+            getSort = Integer.parseInt(sort_SetValue);
+        }
+        return getSort;
+    }
     public void setTextView(String content) {
         memo_textView.setText(content);
     }
