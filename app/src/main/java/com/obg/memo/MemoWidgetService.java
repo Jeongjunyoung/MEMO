@@ -21,7 +21,7 @@ public class MemoWidgetService extends RemoteViewsService {
         private int mCount;
         List<MemoItem> list;
         private static String DATABASE_TABLE = "oneline_memo";
-        private static String DATE = "date DESC";
+        private static String ORDER_BY = "date DESC";
         public DBHelper dbHelper;
 
         public StackRemoteViewsFactory(Context context, Intent intent) {
@@ -52,8 +52,6 @@ public class MemoWidgetService extends RemoteViewsService {
             RemoteViews remoteView = new RemoteViews(mContext.getPackageName(), R.layout.widget_item);
             remoteView.setImageViewResource(R.id.widget_importance, list.get(i).getResId());
             remoteView.setTextViewText(R.id.widget_text_item, "" + list.get(i).getContent());
-
-            //Intent fillinIntent = new Intent();
             return remoteView;
         }
 
@@ -81,7 +79,7 @@ public class MemoWidgetService extends RemoteViewsService {
             dbHelper = new DBHelper(mContext);
             SQLiteDatabase db = dbHelper.getDataBaseHelper();
             Cursor cursor;
-            cursor = db.query(DATABASE_TABLE,null,null,null,null,null,DATE);
+            cursor = db.query(DATABASE_TABLE,null,null,null,null,null, ORDER_BY);
             list = new ArrayList<MemoItem>();
             MemoItem memoItem = null;
             for(int i = 0;i<cursor.getCount(); i++) {

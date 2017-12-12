@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "60702369011",
+    "firebase_url": "https://simple-memo-be7d4.firebaseio.com",
+    "project_id": "simple-memo-be7d4",
+    "storage_bucket": "simple-memo-be7d4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:60702369011:android:f4c934f96257571c",
+        "android_client_info": {
+          "package_name": "com.obg.memo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "60702369011-f842qs2c5d8g7q3a76oipaitct6p5339.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.obg.memo",
+            "certificate_hash": "e9c58a969d74ed13ffbebfc756d5920faf88298c"
+          }
+        },
+        {
+          "client_id": "60702369011-7n9qkdvkhu3bq4tbcl5fcucdmadc8o5g.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyACgzfKVaD4oHNXBoyRGnIBsorCEOOelzQ"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "60702369011-7n9qkdvkhu3bq4tbcl5fcucdmadc8o5g.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

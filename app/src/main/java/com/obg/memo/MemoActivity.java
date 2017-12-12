@@ -2,50 +2,33 @@ package com.obg.memo;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.preference.ListPreference;
 import android.preference.PreferenceManager;
-import android.provider.Settings;
 import android.support.annotation.RequiresApi;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.Editable;
 import android.util.Log;
-import android.util.SparseBooleanArray;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.support.v7.app.ActionBar;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.melnykov.fab.FloatingActionButton;
 import com.obg.memo.adapter.MemoListAdapter;
 
-import org.w3c.dom.Text;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -80,8 +63,11 @@ public class MemoActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        //Singleton s = Singleton.getInstance(this);
-        //mContext = s.getmContext();
+        AdView mAdview = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder()
+                //.addTestDevice("B3EEABB8EE11C2BE770B684D95219ECB")
+                .build();
+        mAdview.loadAd(adRequest);
         mContext = this;
         dbHelper = new DBHelper(this);
         dbHelper.open();
@@ -216,7 +202,6 @@ public class MemoActivity extends AppCompatActivity implements View.OnClickListe
                 memo.startAnimation(hideAnim);
                 break;
             case R.id.write_update_btn:
-                //setModifyMode(true);
                 Intent modifyIntent = new Intent(mContext, WriteActivity.class);
                 String value = memo_textView.getText().toString();
                 modifyIntent.putExtra("mode", "modifyMode");
@@ -262,7 +247,7 @@ public class MemoActivity extends AppCompatActivity implements View.OnClickListe
     public void restart() {
         recreate();
     }
-    public void println(String string) {
+    /*public void println(String string) {
         Log.d("OBG", "TEXT : " + string);
-    }
+    }*/
 }

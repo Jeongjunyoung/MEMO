@@ -36,15 +36,6 @@ public class DBHelper{
             Object[] params = {1,"#9ca0a6", "#6d7073", "#d9dcdf", "25dp"};
             sqLiteDatabase.execSQL(sql, params);
         }
-
-        /*@Override
-        public void onOpen(SQLiteDatabase db) {
-            String sql = "insert into theme_color(window, actionbar, background, textsize) values(?,?,?,?)";
-            Object[] params = {"#9ca0a6", "#6d7073", "#d9dcdf", "25dp"};
-            db.execSQL(sql, params);
-            super.onOpen(db);
-        }*/
-
         @Override
         public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
 
@@ -98,7 +89,6 @@ public class DBHelper{
             memoItem.setDate(cursor.getString(2));
             memoItem.setResId(cursor.getInt(3));
             list.add(memoItem);
-            //Log.d("OBG","#" + _id + " -> " + content + ", " + date + ", " + resId);
         }
         cursor.close();
         return list;
@@ -130,7 +120,6 @@ public class DBHelper{
             themeItems.setActionbar(cursor.getString(1));
             themeItems.setBackground(cursor.getString(2));
             themeItems.setTextsize(cursor.getString(3));
-            //Log.d("OBG","#" + cursor.getString(0) + " -> " + cursor.getString(1) + ", " + cursor.getString(2) + ", " + cursor.getString(3));
         }
         cursor.close();
         return themeItems;

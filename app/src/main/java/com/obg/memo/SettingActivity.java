@@ -74,9 +74,7 @@ public class SettingActivity extends PreferenceActivity implements Preference.On
         if (preference == sortPre) {
             int index = sortPre.findIndexOfValue(value);
             sortPre.setSummary(sortPre.getEntries()[index]);
-            MainSingleton singleton = MainSingleton.getInstance(MemoActivity.mContext);
-            Context context = singleton.getmContext();
-            ((MemoActivity) context).setSort(index);
+            ((MemoActivity) MemoActivity.mContext).setSort(index);
         }
         return true;
     }

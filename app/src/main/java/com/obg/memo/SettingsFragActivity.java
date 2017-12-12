@@ -20,6 +20,8 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.obg.memo.fragment.SetThemeFragment;
 import com.obg.memo.singleton.MainSingleton;
 
@@ -39,6 +41,11 @@ public class SettingsFragActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings_frag_acitivity);
+        AdView mAdview = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder()
+                //.addTestDevice("B3EEABB8EE11C2BE770B684D95219ECB")
+                .build();
+        mAdview.loadAd(adRequest);
         mContext = this;
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
@@ -57,28 +64,7 @@ public class SettingsFragActivity extends AppCompatActivity {
         }
         getSupportFragmentManager().beginTransaction().add(R.id.container, selected).commit();
     }
-
-    /*@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    @Override
-    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        root = (LinearLayout)findViewById(R.id.set_fragment);
-        bar = (Toolbar) LayoutInflater.from(this).inflate(R.layout.setting_toolbar, root, false);
-        bar.setTitle("Theme Setting");
-        bar.setBackgroundDrawable(getDrawable(R.color.fabPrimary));
-        root.addView(bar, 0); // insert at top
-        ThemeItems themeItems = dbHelper.getThemeColor();
-        getWindow().setStatusBarColor(Color.parseColor(themeItems.getWindow()));
-        bar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-    }*/
-
     public void finishActivity() {
-        //SettingSingleton singleton = SettingSingleton.getInstance(SettingActivity.mContext);
         ((SettingActivity) SettingActivity.mContext).finishActivity();
         finish();
     }
@@ -91,7 +77,6 @@ public class SettingsFragActivity extends AppCompatActivity {
     public void changeActionBar(String color) {
         Drawable drawable = (Drawable) getDrawable(R.color.changeBar);
         drawable.setTint(Color.parseColor(color));
-        //bar.setBackgroundDrawable(getDrawable(R.color.changeBar));
         getSupportActionBar().setBackgroundDrawable(getDrawable(R.color.changeBar));
     }
     @Override

@@ -2,6 +2,7 @@ package com.obg.memo;
 
 import android.content.ActivityNotFoundException;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -12,6 +13,7 @@ import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -20,6 +22,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,6 +34,8 @@ import android.widget.Toast;
 import android.support.v7.app.ActionBar;
 
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.melnykov.fab.FloatingActionButton;
 import com.obg.memo.adapter.MemoListAdapter;
 import com.obg.memo.singleton.MainSingleton;
@@ -47,7 +52,6 @@ public class WriteActivity extends AppCompatActivity {
     MemoListAdapter memoAdapter;
     private DBHelper dbHelper;
     Intent micIntent;
-    SpeechRecognizer mRecognizer;
     SQLiteDatabase db;
     ThemeItems themeItems;
     String writeMode = "write";
@@ -57,6 +61,11 @@ public class WriteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_write);
+        AdView mAdview = (AdView) findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder()
+                //.addTestDevice("B3EEABB8EE11C2BE770B684D95219ECB")
+                .build();
+        mAdview.loadAd(adRequest);
         iSpinner = (Spinner) findViewById(R.id.spinner);
         ArrayAdapter spinnerAdapter = ArrayAdapter.createFromResource(this, R.array.importance,android.R.layout.simple_spinner_item);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -76,7 +85,6 @@ public class WriteActivity extends AppCompatActivity {
         micBtn.setColorRipple(Color.parseColor(themeItems.getWindow()));
         Intent getIntentMode = getIntent();
         if (getIntentMode.getStringExtra("mode").equals("modifyMode")) {
-            Toast.makeText(this, "Modify Mode", Toast.LENGTH_SHORT).show();
             String contentStr = getIntentMode.getStringExtra("contentStr");
             writeMode = "modify";
             updateId = getIntentMode.getIntExtra("updateId", 1);
@@ -113,8 +121,27 @@ public class WriteActivity extends AppCompatActivity {
                 }
             }
         });
+        iSpinner.setOnItemSelectedListener(spinnerItemChangeListener);
     }
 
+    private Spinner.OnItemSelectedListener spinnerItemChangeListener = new Spinner.OnItemSelectedListener(){
+
+        @Override
+        public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+            if (i == 2) {
+                iSpinner.setBackgroundResource(R.drawable.spinner_style2);
+            } else if (i == 1) {
+                iSpinner.setBackgroundResource(R.drawable.spinner_style1);
+            } else {
+                iSpinner.setBackgroundResource(R.drawable.spinner_style0);
+            }
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> adapterView) {
+
+        }
+    };
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_write,menu);
@@ -126,29 +153,39 @@ public class WriteActivity extends AppCompatActivity {
         int curId = item.getItemId();
         switch(curId){
             case R.id.memo_add:
-                int item_index = iSpinner.getSelectedItemPosition();
                 String contentEditText = String.valueOf(memo_EditText.getText());
-                Intent intent = new Intent(WriteActivity.this, MemoActivity.class);
-                int resId = 0;
-                if (item_index == 0) {
-                    resId = R.drawable.important_2;
-                } else if (item_index == 1) {
-                    resId = R.drawable.important_1;
-                } else if (item_index == 2) {
-                    resId = R.drawable.important_0;
+                if (contentEditText.trim().equals("")) {
+                    AlertDialog.Builder dialog = new AlertDialog.Builder(WriteActivity.this);
+                    dialog.setTitle("메모를 입력해주세요.");
+                    dialog.setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                        }
+                    });
+                    AlertDialog alertDialog = dialog.create();
+                    alertDialog.show();
+                } else {
+                    int item_index = iSpinner.getSelectedItemPosition();
+                    Intent intent = new Intent(WriteActivity.this, MemoActivity.class);
+                    int resId = 0;
+                    if (item_index == 0) {
+                        resId = R.drawable.important_2;
+                    } else if (item_index == 1) {
+                        resId = R.drawable.important_1;
+                    } else if (item_index == 2) {
+                        resId = R.drawable.important_0;
+                    }
+                    if (writeMode.equals("write")) {
+                        String sql = "insert into oneline_memo(content, date, res_id) values(?,?,?)";
+                        Object[] params = {contentEditText, date, resId};
+                        db.execSQL(sql, params);
+                    } else if (writeMode.equals("modify")) {
+                        ((MemoActivity) MemoActivity.mContext).setTextView(contentEditText);
+                        dbHelper.modifyData(contentEditText, resId, updateId);
+                    }
+                    ((MemoActivity) MemoActivity.mContext).changeValues();
+                    finish();
                 }
-                if (writeMode.equals("write")) {
-                    //dbHelper.insert(contentEditText, date, resId);
-                    String sql = "insert into oneline_memo(content, date, res_id) values(?,?,?)";
-                    Object[] params = {contentEditText, date, resId};
-                    db.execSQL(sql, params);
-                    //MainSingleton singleton = MainSingleton.getInstance(MemoActivity.mContext);
-                } else if (writeMode.equals("modify")) {
-                    ((MemoActivity) MemoActivity.mContext).setTextView(contentEditText);
-                    dbHelper.modifyData(contentEditText, resId,updateId);
-                }
-                ((MemoActivity) MemoActivity.mContext).changeValues();
-                finish();
                 return true;
         }
 
@@ -166,23 +203,6 @@ public class WriteActivity extends AppCompatActivity {
     }
     @Override
     public void onBackPressed() {
-        //Intent intent = new Intent(WriteActivity.this, MemoActivity.class);
-        //startActivity(intent);
         finish();
     }
-    //@RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
-    /*@Override
-    protected void onPostCreate(@Nullable Bundle savedInstanceState) {
-        super.onPostCreate(savedInstanceState);
-        LinearLayout root = (LinearLayout)findViewById(android.R.id.list).getParent().getParent().getParent();
-        Toolbar bar = (Toolbar) LayoutInflater.from(this).inflate(R.layout.setting_toolbar, root, false);
-        bar.setBackgroundDrawable(getDrawable(R.color.fabPrimary));
-        root.addView(bar, 0); // insert at top
-        bar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-    }*/
 }

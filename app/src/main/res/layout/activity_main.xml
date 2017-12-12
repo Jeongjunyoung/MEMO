@@ -1,31 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fab="http://schemas.android.com/apk/res-auto"
+    xmlns:ads="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="horizontal">
 
-        <FrameLayout
-            android:id="@+id/list_layout"
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-                <ListView
-                    android:id="@+id/listView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="#ede8e9ea"
-                    android:choiceMode="multipleChoice" />
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <FrameLayout
+                android:id="@+id/list_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="visible">
+
                 <com.melnykov.fab.FloatingActionButton
                     android:id="@+id/addBtn"
                     android:layout_width="261dp"
                     android:layout_height="20dp"
                     android:layout_gravity="bottom|right"
                     android:layout_margin="16dp"
-                    android:src="@drawable/floating_add_icon"
+                    android:src="@drawable/widget_add_icon"
                     fab:fab_colorNormal="@color/fabPrimary"
                     fab:fab_colorPressed="@color/fabPressed"
                     fab:fab_colorRipple="@color/fabRipple" />
-        </FrameLayout>
+
+                <ListView
+                    android:id="@+id/listView"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@+id/memo"
+                    android:layout_toRightOf="@+id/memo"
+                    android:background="#ede8e9ea"
+                    android:choiceMode="multipleChoice" />
+            </FrameLayout>
+        </LinearLayout>
+            <com.google.android.gms.ads.AdView
+                android:id="@+id/adView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                ads:adSize="BANNER"
+                ads:adUnitId="@string/banner_ad_unit_id" />
+        </LinearLayout>
 
     <LinearLayout
         android:id="@+id/memo"
@@ -52,31 +79,34 @@
                 android:layout_marginTop="30dp"
                 android:background="@drawable/text_rounded"
                 android:scrollbars="vertical"
-                android:visibility="visible"
-                android:textSize="25dp"/>
+                android:textSize="25dp"
+                android:visibility="visible" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:orientation="horizontal">
+
                 <Button
                     android:id="@+id/write_update_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="Modify"
+                    android:layout_marginRight="5dp"
                     android:background="@drawable/button_shape"
-                    android:layout_marginRight="5dp"/>
+                    android:text="Modify" />
 
                 <Button
                     android:id="@+id/write_cancel_btn"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="BACK"
-                    android:background="@drawable/button_shape"/>
+                    android:background="@drawable/button_shape"
+                    android:text="BACK" />
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
+
+
 </RelativeLayout>

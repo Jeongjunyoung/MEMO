@@ -49,7 +49,6 @@ public class MemoListAdapter extends BaseAdapter {
         items.add(memoItem);
     }
     public void removeItem(Long[] arrLong) {
-        //items.remove(position);
         for(int j=0;j<arrLong.length;j++) {
             Long position = arrLong[j];
             for(int i=0;i<items.size();i++) {
@@ -73,8 +72,6 @@ public class MemoListAdapter extends BaseAdapter {
         final Context context = viewGroup.getContext();
         MemoViewHolder holder;
         MemoItem memoItem = items.get(position);
-        //CheckableLayout checkableLayout = (CheckableLayout) convertView.findViewById(R.id.memo_item_layout);
-        //if (convertViewList.size() <= items.size()) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         convertView = inflater.inflate(R.layout.memo_item, viewGroup, false);
         holder = new MemoViewHolder();
@@ -87,10 +84,6 @@ public class MemoListAdapter extends BaseAdapter {
         holder.resId = memoItem.getResId();
         convertViewList.add(convertView);
         convertView.setTag(holder);
-        /*} else {
-            convertView = convertViewList.get(position);
-            holder = (MemoViewHolder) convertView.getTag();
-        }*/
         if (cClick) {
             holder.checkBox.setVisibility(View.VISIBLE);
         } else if (!cClick) {
@@ -109,21 +102,13 @@ public class MemoListAdapter extends BaseAdapter {
 
     public Long[] getCheckItems() {
         List<Long> checkIds = new ArrayList<Long>();
-        //int index = 0;
-        int[] indexArr;
         View view;
         for(int i=0;i<convertViewList.size();i++) {
             view = convertViewList.get(i);
             MemoViewHolder holder = (MemoViewHolder) view.getTag();
             if (holder.checkBox.isChecked()) {
                 checkIds.add((long) holder.checkBox.getId());
-                //removeItem(holder.checkBox.getId());
-                //indexArr[i] = holder.checkBox.getId();
-                //Log.d("IN", holder.memoContent.getText() +" :  " + holder.checkBox.getId());
             }
-        }
-        for(int j=0;j<items.size();j++) {
-            //Log.d("OUT", "" + items.get(j).get_id());
         }
         Long[] arrLong = (Long[]) checkIds.toArray(new Long[0]);
         removeItem(arrLong);
@@ -132,7 +117,6 @@ public class MemoListAdapter extends BaseAdapter {
 
     public void clearChoices() {
         List<Long> checkIds = new ArrayList<Long>();
-        //int index = 0;
         View view;
         for(int i=0;i<convertViewList.size();i++) {
             view = convertViewList.get(i);
